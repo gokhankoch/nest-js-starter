@@ -1,0 +1,22 @@
+version: '3.7'
+# all the containers have to declare inside services
+services:
+  nest-js-starter-service
+  # this build context will take the commands from Dockerfile
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      # application port, this is take value from env file
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    container_name: nest-js-starter-service
+    links:
+      - mongo-db
+  mongo-db:
+    image: mongo
+    # mongo port, this is take value from env file
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    container_name: mongo-db
+    volumes:
+      - ./db/:/data/db
